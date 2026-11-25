@@ -1,6 +1,6 @@
 import { AppErrors } from "../errors/AppErrors.js";
 import { pool } from "../lib/db.js";
-import type { DBUserRow, User } from "../types/users.js";
+import type { DBUserRow, DBUserWithData, User } from "../types/users.js";
 
 // find user by email
 export async function findUserByEmail(email: string): Promise<User | null> {
@@ -23,4 +23,12 @@ export async function createUser(email:string, password_hash: string): Promise<U
         throw new Error("Lost info");
     }
     return user;
+}
+
+export async function findUserByEmailWithPass(email:string): Promise<DBUserWithData | null> {
+    const result = await pool.query<DBUserWithData>(`
+        SELECT id, email, role, password_hash, created_at
+        FROM users WHERE email=$1
+        `, [email]);
+    return result.rows[0] ?? null;
 }

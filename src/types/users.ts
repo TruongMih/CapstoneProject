@@ -14,6 +14,12 @@ export type DBUserRow = {
     created_at: Date
 }
 
-export type DBUserWithData = {
+export type DBUserWithData = DBUserRow & {
     password_hash: string | null;
+}
+
+export type TokenPayLoad = {
+    user_id: string,
+    email: string,
+    role: string
 }
