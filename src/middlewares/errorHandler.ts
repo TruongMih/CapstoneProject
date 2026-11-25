@@ -15,9 +15,9 @@ export function errorHandler(
         })
         return;
     }
-    logger.error({err}, "Unhandler error");
+    logger.error({err}, "error");
     res.status(500).json({
         success: false,
-        message: 'Inteval server error'
+        message: 'Interval server error'
     })
 }
